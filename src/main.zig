@@ -2,6 +2,7 @@ const std = @import("std");
 const fmt = std.fmt;
 
 const zap = @import("zap");
+const zqlite = @import("zqlite");
 
 const state = @import("./state.zig");
 

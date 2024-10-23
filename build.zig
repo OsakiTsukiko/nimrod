@@ -18,6 +18,15 @@ pub fn build(b: *std.Build) void {
     });
     exe.root_module.addImport("zap", zap.module("zap"));
 
+    const zqlite = b.dependency("zqlite", .{
+        .target = target,
+        .optimize = optimize,
+    });
+
+    exe.linkLibC();
+    exe.linkSystemLibrary("sqlite3");
+    exe.root_module.addImport("zqlite", zqlite.module("zqlite"));
+
     b.installArtifact(exe);
     
     const run_cmd = b.addRunArtifact(exe);

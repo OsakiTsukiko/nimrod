@@ -17,9 +17,11 @@ const PEM_SECRET_KEY_FILENAME = "secret.key.pem";
 
 allocator: std.mem.Allocator = undefined,
 working_dir: fs.Dir,
+working_dir_path: []u8 = undefined,
 public_key: [PK_LEN]u8 = undefined,
 secret_key: [SK_LEN]u8 = undefined,
 keypair: SigEd.KeyPair = undefined,
+db_filename: []const u8 = "data.db",
 // TODO: MAYBE NOT HARDCODE THESE? LOOK FOR THEM IN std.crypto (the lengths)
 
 pub const Self = @This();
@@ -28,7 +30,6 @@ pub fn init(allocator: std.mem.Allocator) Self {
     // setup working directory
     // get executable directory path
     const exe_dir_path = fs.selfExeDirPathAlloc(allocator) catch unreachable; // should be fine?
-    defer allocator.free(exe_dir_path);
 
     // transform path to dir
     const exe_dir = fs.openDirAbsolute(
@@ -90,6 +91,7 @@ pub fn init(allocator: std.mem.Allocator) Self {
     return Self {
         .allocator = allocator,
         .working_dir = exe_dir,
+        .working_dir_path = exe_dir_path,
         .public_key = public_key,
         .secret_key = secret_key,
     };
@@ -98,6 +100,9 @@ pub fn init(allocator: std.mem.Allocator) Self {
 // uninitialize
 pub fn deinit(self: *Self) void {
     defer self.working_dir.close();
+    defer self.allocator.free(self.working_dir_path); 
+    // should also free exe_dir_path from init
+    // TODO: LOOK INTO THIS ^
 }
 
 fn genKeyPair(public_key: *[PK_LEN]u8, secret_key: *[SK_LEN]u8, save_dir: fs.Dir) SigEd.KeyPair {
