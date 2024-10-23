@@ -4,8 +4,8 @@
 
     .dependencies = .{
         .zap = .{
-            .url = "git+https://github.com/zigzap/zap?ref=v0.9.0#9543ede15fc9ad038ec4839628c886b124580983",
-            .hash = "1220bb12de9055d585ee0b19c8c9da41ad49a660f5da8be1372c7b85ba43f6e47372",
+            .url = "git+https://github.com/zigzap/zap?ref=v0.9.1#ae5c9278335d8e1133cd6d22707323dda712e120",
+            .hash = "12200223d76ab6cd32f75bc2e31463b0b429bb5b2b6fa4ce8f68dea494ca1ec3398b",
         },
     },
 
