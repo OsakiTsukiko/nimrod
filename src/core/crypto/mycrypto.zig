@@ -1,5 +1,4 @@
 const std = @import("std");
-
 const crypto = std.crypto;
 const sign = crypto.sign;
 const SigEd = sign.Ed25519;
@@ -11,7 +10,7 @@ pub fn generateKeyPair() SigEd.KeyPair {
     return kp;
 }
 
-// var seed: [Ed25519.KeyPair.seed_length]u8 = undefined;
+    // var seed: [Ed25519.KeyPair.seed_length]u8 = undefined;
     // var ran_sum = std.Random.DefaultPrng.init(0);
     // ran_sum.fill(&seed);
 

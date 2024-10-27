@@ -1,21 +1,20 @@
+// packages
 const std = @import("std");
 const fmt = std.fmt;
 const zqlite = @import("zqlite");
+// modules
+const state = @import("../state/state.zig");
+const DBUser = @import("../../entities/user.zig").DBUser;
 
-const state = @import("../state.zig");
-
-const DBUser = @import("./utils/user.zig").DBUser;
-
-
-
+// fields
 allocator: std.mem.Allocator = undefined,
 database_path: [:0]u8 = undefined,
 connection: zqlite.Conn = undefined,
 lock: std.Thread.Mutex = undefined,
 
-
-
 pub const Self = @This();
+
+
 
 pub fn init(allocator: std.mem.Allocator) Self {
     const db_path = fmt.allocPrintZ(allocator, "{s}/{s}", .{state.conf.working_dir_path, state.conf.db_filename}) catch unreachable;
@@ -23,6 +22,7 @@ pub fn init(allocator: std.mem.Allocator) Self {
     const db_flags =  zqlite.OpenFlags.Create | zqlite.OpenFlags.EXResCode;
     var conn = zqlite.open(db_path, db_flags) catch unreachable; // TODO: handle?
 
+    // create users table
     conn.exec(
         \\create table if not exists users (
         \\user_id integer primary key autoincrement,
@@ -32,7 +32,7 @@ pub fn init(allocator: std.mem.Allocator) Self {
         \\)
     , .{}) catch unreachable; // TODO: HANDLE
 
-    // try conn.exec("insert into test (name) values (?1), (?2)", .{"Leto", "Ghanima"});
+    // TODO: ADD INDEXES
 
     return Self {
         .allocator = allocator,

@@ -9,7 +9,9 @@ pub const DBUser = struct {
     };
 };
 
-pub const UserRegReq = struct { 
-    username: []const u8,
-    password: []const u8, 
+pub const WEBUser = struct {
+    pub const RegisterRequestUser = struct { 
+        username: []const u8,
+        password: []const u8, 
+    };
 };

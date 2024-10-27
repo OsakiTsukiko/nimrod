@@ -1,8 +1,12 @@
+// GLOBAL SINGLETON STATE
+
+// packages
 const std = @import("std");
+// modules
+const config = @import("./config.zig");
+const db = @import("../database/database.zig");
 
-const config = @import("./core/config.zig");
-const db = @import("./core/db.zig");
-
+// pseudo fields
 pub var conf: config = undefined;
 pub var database: db = undefined; 
 pub var allocator: std.mem.Allocator = undefined;

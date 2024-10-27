@@ -1,7 +1,8 @@
+// packages
 const std = @import("std");
 const zap = @import("zap");
-
-const state = @import("../../state.zig");
+// modules
+const state = @import("../../core/state/state.zig");
 
 ep: zap.Endpoint = undefined,
 

@@ -1,13 +1,14 @@
+// packages
 const std = @import("std");
 const fmt = std.fmt;
-
 const zap = @import("zap");
 const zqlite = @import("zqlite");
+// modules
+const state = @import("./core/state/state.zig");
+const api_misc = @import("./api/misc.zig");
+const api_listener = @import("./api/listener.zig");
 
-const state = @import("./state.zig");
 
-const webMisc = @import("./web/misc.zig");
-const webListener = @import("./web/listener.zig");
 
 pub fn main() !void {
     var gpa = std.heap.GeneralPurposeAllocator(.{
@@ -16,7 +17,6 @@ pub fn main() !void {
     const allocator = gpa.allocator();
 
     var args = std.process.args(); // command line arguments
-    
     var port: usize = 3000; // default port 3000
     
     if (args.skip()) {
@@ -35,14 +35,5 @@ pub fn main() !void {
     std.debug.print("PK: {s}\n", .{fmt.bytesToHex(state.conf.public_key, .upper)});
     std.debug.print("SK: {s}\n", .{fmt.bytesToHex(state.conf.secret_key, .upper)});
 
-    var l = webListener.init(allocator, port);
-    defer l.deinit();
-
-    l.config();
-    l.start();
-    
-    zap.start(.{
-        .threads = 2,
-        .workers = 1,
-    });
+    api_listener.listen(allocator, port);    
 }

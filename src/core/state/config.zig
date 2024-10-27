@@ -1,9 +1,10 @@
+// packages
 const std = @import("std");
 const fs = std.fs;
 const crypto = std.crypto;
 const SigEd = crypto.sign.Ed25519;
-
-const mycrypto = @import("./mycrypto.zig");
+// modules
+const mycrypto = @import("../crypto/mycrypto.zig");
 
 // TODO: technically here we don't need to save the public key
 // as it can be generated from the secret key. Maybe not save it?
@@ -11,10 +12,10 @@ const mycrypto = @import("./mycrypto.zig");
 // Keys length in bytes
 const PK_LEN: comptime_int = SigEd.PublicKey.encoded_length; // 32
 const SK_LEN: comptime_int = SigEd.SecretKey.encoded_length; // 64
-
 const PEM_PUBLIC_KEY_FILENAME = "public.key.pem";
 const PEM_SECRET_KEY_FILENAME = "secret.key.pem";
 
+// fields
 allocator: std.mem.Allocator = undefined,
 working_dir: fs.Dir,
 working_dir_path: []u8 = undefined,
@@ -22,9 +23,10 @@ public_key: [PK_LEN]u8 = undefined,
 secret_key: [SK_LEN]u8 = undefined,
 keypair: SigEd.KeyPair = undefined,
 db_filename: []const u8 = "data.db",
-// TODO: MAYBE NOT HARDCODE THESE? LOOK FOR THEM IN std.crypto (the lengths)
 
 pub const Self = @This();
+
+
 
 pub fn init(allocator: std.mem.Allocator) Self {
     // setup working directory

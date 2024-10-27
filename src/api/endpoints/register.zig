@@ -1,8 +1,9 @@
+// packages
 const std = @import("std");
 const zap = @import("zap");
-
-const state = @import("../../state.zig");
-const UserRegReq = @import("../../core/utils/user.zig").UserRegReq;
+// modules
+const state = @import("../../core/state/state.zig");
+const RegisterRequestUser = @import("../../entities/user.zig").WEBUser.RegisterRequestUser;
 
 ep: zap.Endpoint = undefined,
 
@@ -38,7 +39,7 @@ pub fn endpoint(self: *Self) *zap.Endpoint {
 fn post(_: *zap.Endpoint, req: zap.Request) void {
     if (req.body) |body| {
         if (std.json.parseFromSlice(
-            UserRegReq,
+            RegisterRequestUser,
             state.allocator,
             body,
             .{},
