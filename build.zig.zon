@@ -3,13 +3,13 @@
     .version = "0.0.0",
 
     .dependencies = .{
-        .zap = .{
-            .url = "git+https://github.com/zigzap/zap?ref=v0.9.1#ae5c9278335d8e1133cd6d22707323dda712e120",
-            .hash = "12200223d76ab6cd32f75bc2e31463b0b429bb5b2b6fa4ce8f68dea494ca1ec3398b",
-        },
         .zqlite = .{
             .url = "git+https://github.com/karlseguin/zqlite.zig?ref=zig-0.13#f21be18a46866b8091346f91166e3fbe1e614b92",
             .hash = "12205c870252c9d4a38397809f5388b13dbc6a4550f50d5f214a355f601e38814a67",
+        },
+        .zap = .{
+            .url = "git+https://github.com/zigzap/zap?ref=v0.9.1#ae5c9278335d8e1133cd6d22707323dda712e120",
+            .hash = "12200223d76ab6cd32f75bc2e31463b0b429bb5b2b6fa4ce8f68dea494ca1ec3398b",
         },
     },
 

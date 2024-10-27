@@ -4,12 +4,14 @@ const zap = @import("zap");
 const misc = @import("./misc.zig");
 
 const public_key_endpoint = @import("./endpoints/public_key.zig");
+const register_endpoint = @import("./endpoints/register.zig");
 
 allocator: std.mem.Allocator = undefined,
 port: usize = undefined,
 listener: zap.Endpoint.Listener = undefined,
 
 pk_ep: public_key_endpoint = undefined,
+reg_ep: register_endpoint = undefined,
 
 pub const Self = @This();
 
@@ -30,6 +32,7 @@ pub fn init(allocator: std.mem.Allocator, port: usize) Self {
         .port = port,
         .listener = listener,
         .pk_ep = public_key_endpoint.init("/public_key"),
+        .reg_ep = register_endpoint.init("/register"),
     };
 }
 
@@ -39,6 +42,7 @@ pub fn deinit(self: *Self) void {
 
 pub fn config(self: *Self) void {
     self.listener.register(self.pk_ep.endpoint()) catch unreachable; // TODO: handle?
+    self.listener.register(self.reg_ep.endpoint()) catch unreachable;
 }
 
 pub fn start(self: *Self) void {
